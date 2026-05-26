@@ -62,3 +62,44 @@ SELECT m.id,
  SELECT *
  FROM drivers_license
  WHERE plate_number LIKE '%H42W%';   
+
+
+--7.JOIN member with person
+SELECT p.id,
+  p.name, 
+  p.license_id,
+  g.id AS membership_id
+ FROM person p
+ INNER JOIN get_fit_now_member g
+ ON p.id = g.person_id;
+
+--8.FILTER USING INTERVIEW CLUES
+ 
+ SELECT p.name,
+       d.plate_number,
+       g.membership_status,
+       c.check_in_date
+FROM person p
+INNER JOIN drivers_license d
+ON p.license_id = d.id
+INNER JOIN get_fit_now_member g
+ON p.id = g.person_id
+INNER JOIN get_fit_now_check_in c
+ON g.id = c.membership_id
+WHERE g.membership_status = 'gold'
+AND c.check_in_date = 20180109
+AND d.plate_number LIKE '%H42W%';
+
+
+## Suspect Investigation
+
+### SQL Techniques Used
+- INNER JOIN
+- LIKE
+- Multi-table filtering
+
+### Findings
+- Identified suspect through gym membership and license plate analysis
+
+
+
