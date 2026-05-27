@@ -103,3 +103,64 @@ AND d.plate_number LIKE '%H42W%';
 
 
 
+--9. Jeremy Bower: the murderer's id
+SELECT *
+FROM interview
+WHERE person_id = 67318;
+
+
+--10. Filter query to find the red hair woman with tesla model s
+
+
+SELECT p.id,
+       p.name,
+       d.hair_color,
+       d.gender,
+       d.car_make,
+       d.car_model,
+       fb.event_name,
+       fb.date
+FROM person p
+INNER JOIN drivers_license d
+ON p.license_id = d.id
+INNER JOIN facebook_event_checkin fb
+ON p.id = fb.person_id
+WHERE d.gender = 'female'
+AND d.hair_color = 'red'
+AND d.car_make = 'Tesla'
+AND d.car_model = 'Model S'
+AND fb.event_name = 'SQL Symphony Concert'
+AND fb.date LIKE '201712%';
+
+
+
+--11. Filter the soecific
+
+--- Find the mastermind
+SELECT p.name,
+       COUNT(*) AS concert_visits
+FROM person p
+INNER JOIN drivers_license d
+ON p.license_id = d.id
+INNER JOIN facebook_event_checkin fb
+ON p.id = fb.person_id
+WHERE d.gender = 'female'
+AND d.hair_color = 'red'
+AND d.car_make = 'Tesla'
+AND d.car_model = 'Model S'
+AND fb.event_name = 'SQL Symphony Concert'
+AND fb.date LIKE '201712%'
+GROUP BY p.name
+HAVING COUNT(*) = 3;
+
+
+--12. Insert the solution value
+
+INSERT INTO solution VALUES (1, 'Miranda Priestly');
+
+
+--13.
+--Solution
+SELECT value
+FROM solution;
+
